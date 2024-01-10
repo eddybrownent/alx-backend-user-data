@@ -9,8 +9,7 @@ from typing import List
 
 def filter_datum(fields: List[str],
                  redaction: str, message: str, separator: str):
-    """func using regex to replace occur of certain field values
-    """
+    """func using regex to replace occur of certain field values"""
     return re.sub(fr'({"|".join(fields)})=[^{separator}]+',
                   f'\\1={redaction}', message)
 
