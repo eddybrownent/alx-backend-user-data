@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """
+Replace and format occur of certain field values
 """
 import logging
 import re
@@ -8,8 +9,7 @@ from typing import List
 
 def filter_datum(fields: List[str],
                  redaction: str, message: str, separator: str):
-    """
-    func using regex to replace occur of certain field values
+    """func using regex to replace occur of certain field values
     """
     return re.sub(fr'({"|".join(fields)})=[^{separator}]+',
                   f'\\1={redaction}', message)
@@ -28,5 +28,7 @@ class RedactingFormatter(logging.Formatter):
         self.fields = fields
 
     def format(self, record: logging.LogRecord) -> str:
+        """This function filters the specified fields
+        """
         return filter_datum(self.fields, self.REDACTION,
                             super().format(record), self.SEPARATOR)
