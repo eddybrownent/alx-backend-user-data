@@ -47,7 +47,7 @@ def get_logger() -> logging.Logger:
     logger.propagate = False
 
     stream_handler = logging.StreamHandler()
-    formatter = RedactingFormatter(PII_FIELDS)
+    formatter = RedactingFormatter(list(PII_FIELDS))
     stream_handler.setFormatter(formatter)
 
     logger.addHandler(stream_handler)
@@ -72,3 +72,26 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     )
 
     return connection
+
+
+def main():
+    """
+    Set up logging with the configured "user_data" logger
+    """
+    info_logger = get_logger()
+
+    db_connection = get_db()
+
+    cursor = db_connection.cursor()
+    cursor.execute("SELECT * FROM users")
+    fields = [i[0] for i in cursor.description]
+
+    for row in cursor:
+        msg = ''.join(f'{f}={str(r)}; ' for val, f in zip(row, fields))
+        info_logger.info(msg.strip())
+
+    db_connection.close()
+
+
+if __name__ == "__main__":
+    main()
