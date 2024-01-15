@@ -21,7 +21,14 @@ class Auth:
         Returns:
             bool - True if authe is required else false
         """
-        return False
+        if path is None or excluded_paths is None:
+            return True
+
+        slash_p = [p if p.endswith('/') else p + '/' for p in excluded_paths]
+
+        ensure_ends = path if path.endswith('/') else path + '/'
+
+        return ensure_ends not in slash_p
 
     def authorization_header(self, request=None) -> str:
         """
