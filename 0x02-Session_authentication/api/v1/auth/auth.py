@@ -60,3 +60,18 @@ class Auth:
             TypeVar('User') : Current user
         """
         return None
+
+    def session_cookie(self, request: Request = None) -> str:
+        """
+        Get Session ID from request cookies
+
+        Args:
+            request: Flask request object
+
+        Returns:
+            str:Session ID if found in the request cookies, else None
+        """
+        if request is None:
+            return None
+
+        return request.cookies.get(self.SESSION_NAME, None)
