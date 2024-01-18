@@ -70,7 +70,8 @@ class BasicAuth(Auth):
 
         try:
             users = User.search({'email': user_email})
-        except Exception:
+        except Exception  as e:
+            print(f"Unexpected error during user search: {e}")
             return None
 
         if not users:
