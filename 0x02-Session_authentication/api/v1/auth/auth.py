@@ -2,6 +2,7 @@
 """
 Authentication system
 """
+from os import getenv
 from typing import List, TypeVar
 from flask import request
 
@@ -61,7 +62,7 @@ class Auth:
         """
         return None
 
-    def session_cookie(self, request: Request = None) -> str:
+    def session_cookie(self, request: request = None):
         """
         Get Session ID from request cookies
 
@@ -74,4 +75,4 @@ class Auth:
         if request is None:
             return None
 
-        return request.cookies.get(self.SESSION_NAME, None)
+        return request.cookies.get(getenv('SESSION_NAME'))
