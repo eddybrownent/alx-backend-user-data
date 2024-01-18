@@ -30,3 +30,18 @@ class SessionAuth(Auth):
         self.user_id_by_session_id[session_id] = user_id
 
         return session_id
+
+    def user_id_for_session_id(self, session_id: str = None) -> str:
+        """
+        Get User ID based on Session ID
+
+        Args:
+            session_id: Session ID for which linked User ID is to be retrieved
+
+        Returns:
+            str: User ID if the session_id is found in the dict, otherwise None
+        """
+        if session_id is None or not isinstance(session_id, str):
+            return None
+
+        return self.user_id_by_session_id.get(session_id, None)
