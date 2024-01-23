@@ -2,10 +2,22 @@
 """
 Authenitcation module
 """
+import uuid
 import bcrypt
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
+
+
+def _generate_uuid() -> str:
+    """
+    Generates representation of a new UUID
+
+    Returns:
+        str: _description_
+    """
+    id = uuid4()
+    return str(id)
 
 
 def _hash_password(password: str) -> bytes:
