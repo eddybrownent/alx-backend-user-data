@@ -83,12 +83,11 @@ class DB:
             NoResultFound: If no user for the given user_id
             ValueError: If an invalid attribute is passed in kwargs
         """
-        try:
-            user = self.find_user_by(id=user_id)
-            for key, value in kwargs.items():
-                if hasattr(user, key):
-                    setattr(user, key, value)
-                else:
-                    raise ValueError
-        finally:
-            self._session.commit()
+        user = self.find_user_by(id=user_id)
+        for key, value in kwargs.items():
+            if hasattr(User, key):
+                setattr(user, key, value)
+            else:
+                raise ValueError
+
+        self._session.commit()
