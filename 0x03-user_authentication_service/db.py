@@ -58,13 +58,14 @@ class DB:
             NoResultFound: If no results are found.
             InvalidRequestError: If wrong query arguments are passed
         """
-        try:
-            results = self._session.query(User).filter_by(**kwargs).first()
-            return results
-        except NoResultFound:
-            raise
-        except InvalidRequestError:
-            raise
+        if not kwargs:
+            raise InvalidRequestError
+
+        results = self._session.query(User).filter_by(**kwargs).first()
+        if not results:
+            raise NoResultFound
+
+        return results
 
     def update_user(self, user_id: int, **kwargs):
         """
