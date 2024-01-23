@@ -33,7 +33,7 @@ class Auth:
         """
         try:
             self._db.find_user_by(email=email)
-            raise ValueError(f"User {email} already exists.")
+            raise ValueError(f"User {email} already exists")
         except NoResultFound:
             pass
 
