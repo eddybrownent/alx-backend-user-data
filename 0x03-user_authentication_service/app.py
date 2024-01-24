@@ -54,9 +54,9 @@ def logout() -> str:
     """
     If user exists destroy session & redirect user to GET
     """
-    session_id = request.cookies.get('session_id')
+    session_id = request.cookies.get('session_id', None)
     user = AUTH.get_user_from_session_id(session_id)
-    if user is None:
+    if user is None or session_id is None:
         abort(403)
     else:
         AUTH.destroy_session(user.id)
