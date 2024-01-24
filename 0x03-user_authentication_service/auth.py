@@ -16,8 +16,7 @@ def _generate_uuid() -> str:
     Returns:
         str: _description_
     """
-    id = uuid4()
-    return str(id)
+    return str(uuid4())
 
 
 def _hash_password(password: str) -> bytes:
