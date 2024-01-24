@@ -50,7 +50,7 @@ def login() -> str:
 
 
 @app.route('/sessions', methods=['DELETE'], strict_slashes=False)
-def logout():
+def logout() -> str:
     """
     If user exists destroy session & redirect user to GET
     """
@@ -60,6 +60,23 @@ def logout():
     if user:
         AUTH.destroy_session(user.id)
         return redirect('/')
+    else:
+        abort(403)
+
+
+@app.route('/profile', methods=['GET'], strict_slashes=False)
+def profile() -> str:
+    """
+    Retrieve user profile based on provided session ID
+
+    Returns:
+        JSON: User profile or 403 status
+    """
+    session_id = request.cookies.get('session_id')
+    user = AUTH.get_user_from_session_id(session_id)
+    if user:
+        profile = {"email": user.email}
+        return jsonify(profile), 200
     else:
         abort(403)
 
