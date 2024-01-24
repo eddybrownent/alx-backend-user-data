@@ -49,8 +49,8 @@ def login() -> str:
         abort(401)
 
 
-@app.route('/sessions', methods['DELETE'], strict_slashes=False)
-def logout():
+@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
+def logout() -> str:
     """
     If user exists destroy session & redirect user to GET
     """
