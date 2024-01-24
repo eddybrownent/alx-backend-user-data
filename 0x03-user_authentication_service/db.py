@@ -82,7 +82,10 @@ class DB:
         Raises:
             ValueError: If an invalid attribute is passed in kwargs
         """
-        user = self.find_user_by(id=user_id)
+        try:
+            user = self.find_user_by(id=user_id)
+        except NoResultFound:
+            raise ValueError
         for key, value in kwargs.items():
             if not hasattr(user, key):
                 raise ValueError
