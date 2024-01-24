@@ -84,7 +84,7 @@ class DB:
         """
         user = self.find_user_by(id=user_id)
         for key, value in kwargs.items():
-            if not hasattr(User, key):
+            if not hasattr(user, key):
                 raise ValueError
 
             setattr(user, key, value)
